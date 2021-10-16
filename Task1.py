@@ -9,19 +9,23 @@ from scipy.stats import shapiro
 import seaborn as sns
 
 # # # # Task 1
+
 # Определение случайной последовательности и её длины
 n = 1000000
 mass = [random.uniform(0, 1) for i in range(n)]
 # print(mass)
 
 # График случайной величины
+
 fig, ax = plt.subplots(figsize=(10, 10))
 ax.scatter(x=range(10000), y=mass[0:10000])
 # plt.show()
 
 
 # # Task 1.1
+
 # Расчёт мат. ожидания
+
 m_squared = []
 eval_math = float("{0:.2f}".format(sum(mass) / n))
 
@@ -29,29 +33,36 @@ for i in mass:
     m_squared.append(float("{0:.5f}".format(pow(i, 2))))
 
 # Расчёт дисперсии
+
 dispersion = (float("{0:.3f}".format((sum(m_squared) / n) - pow(eval_math, 2))))
 
 # Вывод результатов
+
 print("Dispersion:", dispersion)
 print("Expected value:", eval_math)
-# print("Distribution is normal")
+
 
 
 
 
 
 # # Task 1.2
+
 # Функция правильного округления
+
 def to_round(num):
     num = int(num + (0.5 if num > 0 else -0.5))
     return num
 # Сортировка массива
+
 mass.sort()
 # Определение интервалов
+
 m = to_round(1 + 3.322 * math.log(n,10))
 r = mass[-1] - mass[0]
 h = r / m
 # Вывод количества интервалов
+
 # print(m)
 # Вспомогательные переменные
 f_elem = mass[0]
@@ -62,12 +73,15 @@ index = 1
 freq_sum = 0
 dict_freq = {}
 table = PrettyTable()
+
 # Определение столбцов
 table.field_names = ['Index', 'Interval', 'Frequency hit', 'Relative frequency ']
+
 # Создание интервалов
 for i in range(m):
     intervals.append((round(f_elem, 4), round(f_elem + h, 4)))
     f_elem += h
+    
 # Заполнение таблицы данными
 for interval in intervals:
     for num in mass:
@@ -80,14 +94,17 @@ for interval in intervals:
 # Подсчёт суммы частот
 for key in dict_freq:
     freq_sum += dict_freq[key]
+    
 # Добавление суммы в таблицу
 table.add_row([' ', ' ', ' ', ' '])
 table.add_row(['Σ', ' ', freq_sum, ' '])
+
 # Вывод таблицы
 print(table)
 
 
 # # Task 1.3
+
 values_listed = list(dict_freq.values())
 average_interval = []
 teor_frequency = []
